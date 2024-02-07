@@ -69,7 +69,7 @@ class Post extends Model
         return ceil(Str::wordCount($this->body) / 250);
     }
 
-    public function getThumbnailImage()
+    public function getThumbnailUrl()
     {
         $isUrl = str_contains($this->image, 'http');
 
