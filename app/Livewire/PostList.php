@@ -34,6 +34,13 @@ class PostList extends Component
         $this->search = $search;
     }
 
+    public function clearFilters()
+    {
+        $this->search = '';
+        $this->category = '';
+        $this->resetPage();
+    }
+
     #[Computed()]
     public function posts()
     {
