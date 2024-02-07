@@ -39,11 +39,17 @@ class PostList extends Component
     {
         return Post::published()
             ->orderBy('published_at', $this->sort)
-            ->when(Category::where('slug', $this->category)->first(), function ($query) {
+            ->when($this->activeCategory, function ($query) {
                 $query->withCategory($this->category);
             })
             ->where('title', 'LIKE', "%{$this->search}%")
             ->paginate(5);
+    }
+
+    #[Computed()]
+    public function activeCategory()
+    {
+        return Category::where('slug', $this->category)->first();
     }
 
     public function render()
