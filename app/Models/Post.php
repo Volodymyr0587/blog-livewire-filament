@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,16 @@ class Post extends Model
 
     const EXCERPT_LENGTH = 100;
 
+    protected $fillable = [
+        'user_id',
+        'image',
+        'title',
+        'slug',
+        'body',
+        'published_at',
+        'featured',
+    ];
+
     protected $casts = [
         'published_at' => 'datetime',
     ];
@@ -23,6 +34,11 @@ class Post extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
     }
 
     public function scopePublished($query)
