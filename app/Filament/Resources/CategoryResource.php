@@ -6,6 +6,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +24,10 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('title')->required()->minLength(1)->maxLength(150),
+                TextInput::make('slug')->required()->minLength(1)->unique(ignoreRecord: true)->maxLength(150),
+                TextInput::make('text_color')->nullable(),
+                TextInput::make('bg_color')->nullable()
             ]);
     }
 
