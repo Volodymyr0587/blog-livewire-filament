@@ -2,17 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Category;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CategoryResource\RelationManagers;
 
 class CategoryResource extends Resource
 {
@@ -24,7 +25,15 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required()->minLength(1)->maxLength(150),
+                TextInput::make('title')
+                ->live()
+                ->required()->minLength(1)->maxLength(150)
+                ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                    if($operation === 'edit') {
+                        return;
+                    }
+                    $set('slug', Str::slug($state));
+                }),
                 TextInput::make('slug')->required()->minLength(1)->unique(ignoreRecord: true)->maxLength(150),
                 TextInput::make('text_color')->nullable(),
                 TextInput::make('bg_color')->nullable()
