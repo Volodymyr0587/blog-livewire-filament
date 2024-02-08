@@ -17,9 +17,7 @@ class LikeButton extends Component
 
         $user = auth()->user();
 
-        $hasLiked = $user->likes()->where('post_id', $this->post->id)->exists();
-
-        if ($hasLiked) {
+        if ($user->hasLiked($this->post)) {
             $user->likes()->detach($this->post);
             return;
         }
