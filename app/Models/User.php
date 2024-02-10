@@ -45,7 +45,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function isEditor()
     {
-        $this->role === self::ROLE_EDITOR;
+        return $this->role === self::ROLE_EDITOR;
     }
 
     /**
