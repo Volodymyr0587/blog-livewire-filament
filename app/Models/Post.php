@@ -55,7 +55,7 @@ class Post extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('published_at', '<=', Carbon::now());
+        $query->where('published_at', '<=', Carbon::now());
     }
 
     public function scopeWithCategory($query, string $category)
@@ -67,12 +67,17 @@ class Post extends Model
 
     public function scopeFeatured($query)
     {
-        return $query->where('featured', true);
+        $query->where('featured', true);
     }
 
     public function scopePopular($query)
     {
-        return $query->withCount('likes')->orderBy('likes_count', 'desc');
+        $query->withCount('likes')->orderBy('likes_count', 'desc');
+    }
+
+    public function scopeSearch($query, $search = '')
+    {
+        $query->where('title', 'LIKE', "%{$search}%");
     }
 
     public function getExcerpt()
