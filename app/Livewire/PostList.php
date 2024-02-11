@@ -52,8 +52,7 @@ class PostList extends Component
                 $query->withCategory($this->category);
             })
             ->when($this->popular, function ($query) {
-                $query->withCount('likes')
-                ->orderBy('likes_count', 'desc');
+                $query->popular();
             })
             ->where('title', 'LIKE', "%{$this->search}%")
             ->orderBy('published_at', $this->sort)
