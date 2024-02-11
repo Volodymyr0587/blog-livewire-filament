@@ -23,6 +23,9 @@ class PostList extends Component
     #[Url()]
     public $category = '';
 
+    #[Url()]
+    public $popular = false;
+
     public function setSort($sort)
     {
         $this->sort = ($sort === 'desc') ? 'desc' : 'asc';
@@ -45,11 +48,15 @@ class PostList extends Component
     public function posts()
     {
         return Post::published()
-            ->orderBy('published_at', $this->sort)
             ->when($this->activeCategory, function ($query) {
                 $query->withCategory($this->category);
             })
+            ->when($this->popular, function ($query) {
+                $query->withCount('likes')
+                ->orderBy('likes_count', 'desc');
+            })
             ->where('title', 'LIKE', "%{$this->search}%")
+            ->orderBy('published_at', $this->sort)
             ->paginate(5);
     }
 
