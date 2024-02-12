@@ -6,6 +6,8 @@ use App\Filament\Resources\CommentResource\Pages;
 use App\Filament\Resources\CommentResource\RelationManagers;
 use App\Models\Comment;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +25,20 @@ class CommentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Select::make('post_id')
+                    ->relationship('post', 'title')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                TextInput::make('comment')
+                    ->required()
+                    ->minLength(1)
+                    ->maxLength(255)
             ]);
     }
 
