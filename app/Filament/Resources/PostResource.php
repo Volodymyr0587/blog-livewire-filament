@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\PostResource\RelationManagers\CommentsRelationManager;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
@@ -99,7 +100,7 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CommentsRelationManager::class
         ];
     }
 
