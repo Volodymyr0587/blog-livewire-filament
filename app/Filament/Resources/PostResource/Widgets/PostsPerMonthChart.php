@@ -11,6 +11,8 @@ class PostsPerMonthChart extends ChartWidget
 {
     protected static ?string $heading = 'Chart';
 
+    protected int | string | array $columnSpan = 'full';
+
     protected function getData(): array
     {
         $data = Trend::model(Post::class)
