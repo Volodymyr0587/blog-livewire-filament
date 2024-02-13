@@ -18,7 +18,7 @@ class ListPosts extends ListRecords
         ];
     }
 
-    protected function getHeaderWidgets(): array
+    protected function getFooterWidgets(): array
     {
         return [
             PostsPerMonthChart::class,
