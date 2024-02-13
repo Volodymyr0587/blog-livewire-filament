@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\CommentResource\Widgets\LatestCommentsWidget;
 use App\Filament\Resources\PostResource\Widgets\PostsPerMonthChart;
 use App\Filament\Resources\UserResource\Widgets\UserStatsWidget;
 use Filament\Http\Middleware\Authenticate;
@@ -43,6 +44,7 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\FilamentInfoWidget::class,
                 UserStatsWidget::class,
                 PostsPerMonthChart::class,
+                LatestCommentsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
